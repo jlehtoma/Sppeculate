@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>share/icons/application-exit.svg</file>
+        <file>share/icons/document-open.svg</file>
+        <file>share/icons/folder-new.svg</file>
+        <file>share/icons/go-next.svg</file>
+        <file>share/icons/go-previous.svg</file>
+    </qresource>
+</RCC>
