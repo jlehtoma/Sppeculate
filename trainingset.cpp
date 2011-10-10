@@ -12,11 +12,6 @@ TrainingSet::TrainingSet(const QString &path)
     }
 }
 
-TrainingSet::~TrainingSet()
-{
-
-}
-
 int TrainingSet::count()
 {
     return imageInfos.count();

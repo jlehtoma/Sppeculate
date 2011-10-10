@@ -1,9 +1,14 @@
 <RCC>
     <qresource prefix="/">
-        <file>share/icons/application-exit.svg</file>
         <file>share/icons/document-open.svg</file>
         <file>share/icons/folder-new.svg</file>
         <file>share/icons/go-next.svg</file>
         <file>share/icons/go-previous.svg</file>
+        <file>share/icons/gnome-shutdown.svg</file>
+        <file>share/icons/app-icon.svg</file>
+        <file>share/icons/help-browser.svg</file>
+        <file>share/icons/zoom-in.svg</file>
+        <file>share/icons/zoom-original.svg</file>
+        <file>share/icons/zoom-out.svg</file>
     </qresource>
 </RCC>

@@ -24,11 +24,22 @@ private:
     double scaleFactor;
     TrainingSet *trainingItems;
 
+    void scaleImage(double factor);
+    void adjustScrollBar(QScrollBar *scrollBar, double factor);
+
 private slots:
     void openFolder();
+    void showAbout();
     void showImage(int index);
+
     void nextItem();
     void prevItem();
+
+    void updateUI();
+
+    void normalSize();
+    void zoomIn();
+    void zoomOut();
 };
 
 #endif // MAINWINDOW_H

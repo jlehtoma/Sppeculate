@@ -13,24 +13,32 @@
   <property name="windowTitle">
    <string>Sppeculate</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="sppeculate.qrc">
+    <normaloff>:/share/icons/app-icon.svg</normaloff>:/share/icons/app-icon.svg</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
-     <widget class="QScrollArea" name="scrollArea">
-      <property name="widgetResizable">
-       <bool>true</bool>
-      </property>
-      <widget class="QWidget" name="scrollAreaWidgetContents">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>805</width>
-         <height>220</height>
-        </rect>
-       </property>
-      </widget>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QScrollArea" name="scrollArea">
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="scrollAreaWidgetContents">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>803</width>
+           <height>256</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item>
      <widget class="QTextEdit" name="infoEdit">
@@ -58,94 +66,6 @@ color: rgb(255, 255, 255);</string>
       </property>
      </widget>
     </item>
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="prevButton">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="sppeculate.qrc">
-          <normaloff>:/share/icons/go-previous.svg</normaloff>:/share/icons/go-previous.svg</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>30</width>
-          <height>30</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="nextButton">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="sppeculate.qrc">
-          <normaloff>:/share/icons/go-next.svg</normaloff>:/share/icons/go-next.svg</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>30</width>
-          <height>30</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
-    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -165,7 +85,14 @@ color: rgb(255, 255, 255);</string>
     <addaction name="separator"/>
     <addaction name="action_Quit"/>
    </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -175,13 +102,21 @@ color: rgb(255, 255, 255);</string>
     <bool>false</bool>
    </attribute>
    <addaction name="actionOpenFolder"/>
+   <addaction name="separator"/>
+   <addaction name="actionZoomIn"/>
+   <addaction name="actionZoomDefault"/>
+   <addaction name="actionZoomOut"/>
+   <addaction name="separator"/>
+   <addaction name="actionPrevItem"/>
+   <addaction name="actionNextItem"/>
+   <addaction name="separator"/>
    <addaction name="action_Quit"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="action_Quit">
    <property name="icon">
     <iconset resource="sppeculate.qrc">
-     <normaloff>:/share/icons/application-exit.svg</normaloff>:/share/icons/application-exit.svg</iconset>
+     <normaloff>:/share/icons/gnome-shutdown.svg</normaloff>:/share/icons/gnome-shutdown.svg</iconset>
    </property>
    <property name="text">
     <string>&amp;Quit</string>
@@ -206,6 +141,93 @@ color: rgb(255, 255, 255);</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+O</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="icon">
+    <iconset resource="sppeculate.qrc">
+     <normaloff>:/share/icons/help-browser.svg</normaloff>:/share/icons/help-browser.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;About</string>
+   </property>
+   <property name="toolTip">
+    <string>Show about box</string>
+   </property>
+  </action>
+  <action name="actionNextItem">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="sppeculate.qrc">
+     <normaloff>:/share/icons/go-next.svg</normaloff>:/share/icons/go-next.svg</iconset>
+   </property>
+   <property name="text">
+    <string>NextItem</string>
+   </property>
+   <property name="toolTip">
+    <string>Next picture</string>
+   </property>
+  </action>
+  <action name="actionPrevItem">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="sppeculate.qrc">
+     <normaloff>:/share/icons/go-previous.svg</normaloff>:/share/icons/go-previous.svg</iconset>
+   </property>
+   <property name="text">
+    <string>PrevItem</string>
+   </property>
+   <property name="toolTip">
+    <string>Previous picture</string>
+   </property>
+  </action>
+  <action name="actionZoomDefault">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="sppeculate.qrc">
+     <normaloff>:/share/icons/zoom-original.svg</normaloff>:/share/icons/zoom-original.svg</iconset>
+   </property>
+   <property name="text">
+    <string>ZoomDefault</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom to deault level</string>
+   </property>
+  </action>
+  <action name="actionZoomOut">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="sppeculate.qrc">
+     <normaloff>:/share/icons/zoom-out.svg</normaloff>:/share/icons/zoom-out.svg</iconset>
+   </property>
+   <property name="text">
+    <string>ZoomOut</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom out</string>
+   </property>
+  </action>
+  <action name="actionZoomIn">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="sppeculate.qrc">
+     <normaloff>:/share/icons/zoom-in.svg</normaloff>:/share/icons/zoom-in.svg</iconset>
+   </property>
+   <property name="text">
+    <string>ZoomIn</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom in</string>
    </property>
   </action>
  </widget>

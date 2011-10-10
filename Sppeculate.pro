@@ -22,5 +22,8 @@ FORMS    += mainwindow.ui
 RESOURCES += \
     sppeculate.qrc
 
+# The application version
+VERSION = 0.0.1
 
-
+# Define the preprocessor macro to get the application version in our application.
+DEFINES += APP_VERSION=\\\"$$VERSION\\\"
