@@ -17,10 +17,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionPrevItem, SIGNAL(triggered()), this, SLOT(prevItem()));
 
     ui->scrollArea->setWidget(imageLabel);
-   //setCentralWidget(ui->scrollArea);
 
+    // TODO: traingItems MUST be initialized in the constructor!
     scaleFactor = 1.0;
-    qDebug() << trainingItems->count();
+    //qDebug() << trainingItems->count();
 
     updateUI();
 }
