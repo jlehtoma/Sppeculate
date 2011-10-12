@@ -31,8 +31,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>803</width>
-           <height>256</height>
+           <width>809</width>
+           <height>288</height>
           </rect>
          </property>
         </widget>
@@ -74,7 +74,7 @@ color: rgb(255, 255, 255);</string>
      <x>0</x>
      <y>0</y>
      <width>825</width>
-     <height>29</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -103,9 +103,9 @@ color: rgb(255, 255, 255);</string>
    </attribute>
    <addaction name="actionOpenFolder"/>
    <addaction name="separator"/>
-   <addaction name="actionZoomIn"/>
-   <addaction name="actionZoomDefault"/>
    <addaction name="actionZoomOut"/>
+   <addaction name="actionZoomDefault"/>
+   <addaction name="actionZoomIn"/>
    <addaction name="separator"/>
    <addaction name="actionPrevItem"/>
    <addaction name="actionNextItem"/>

@@ -7,12 +7,15 @@
 class TrainingSet
 {
 public:
+    TrainingSet();
     TrainingSet(const QString &path);
     ~TrainingSet();
 
     int count();
-    QString filePath(int index);
-    QString fileName(int index);
+    QString getFilePath(int index);
+    QString getFileName(int index);
+    QString getRootPath();
+    void readData(const QString &path);
 
 private:
     QDir rootPath;

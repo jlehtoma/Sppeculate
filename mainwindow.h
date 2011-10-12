@@ -22,8 +22,11 @@ private:
     QLabel *imageLabel;
     int currentIndex;
     double scaleFactor;
-    TrainingSet *trainingItems;
+    TrainingSet trainingItems;
 
+    void closeEvent(QCloseEvent *event);
+    void readSettings();
+    void writeSettings();
     void scaleImage(double factor);
     void adjustScrollBar(QScrollBar *scrollBar, double factor);
 

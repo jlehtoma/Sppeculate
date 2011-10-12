@@ -1,15 +1,18 @@
 #include "trainingset.h"
 
+TrainingSet::TrainingSet()
+{
+    rootPath = QDir("");
+}
+
 TrainingSet::TrainingSet(const QString &path)
 {
-    QDir rootPath(path);
-    if (rootPath.exists())
-    {
-        QStringList imageFilters;
+    readData(path);
+}
 
-        imageFilters << "*.jpg" << "*.png" << "*.tif";
-        imageInfos = rootPath.entryInfoList(imageFilters);
-    }
+TrainingSet::~TrainingSet()
+{
+
 }
 
 int TrainingSet::count()
@@ -17,7 +20,7 @@ int TrainingSet::count()
     return imageInfos.count();
 }
 
-QString TrainingSet::fileName(int index)
+QString TrainingSet::getFileName(int index)
 {
     if (index >= 0 && index < imageInfos.count()) {
         QFileInfo itemInfo = imageInfos.value(index);
@@ -28,7 +31,7 @@ QString TrainingSet::fileName(int index)
     }
 }
 
-QString TrainingSet::filePath(int index)
+QString TrainingSet::getFilePath(int index)
 {
     if (index >= 0 && index < imageInfos.count()) {
         QFileInfo itemInfo = imageInfos.value(index);
@@ -36,5 +39,23 @@ QString TrainingSet::filePath(int index)
     }
     else {
         return QString("");
+    }
+}
+
+QString TrainingSet::getRootPath()
+{
+    return rootPath.absolutePath();
+}
+
+void TrainingSet::readData(const QString &path)
+{
+    QDir tempRootPath(path);
+    if (tempRootPath.exists())
+    {
+        rootPath = tempRootPath;
+        QStringList imageFilters;
+
+        imageFilters << "*.jpg" << "*.png" << "*.tif";
+        imageInfos = rootPath.entryInfoList(imageFilters);
     }
 }
