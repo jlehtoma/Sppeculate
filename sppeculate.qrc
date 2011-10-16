@@ -10,5 +10,6 @@
         <file>share/icons/zoom-in.svg</file>
         <file>share/icons/zoom-original.svg</file>
         <file>share/icons/zoom-out.svg</file>
+        <file>share/icons/settings.svg</file>
     </qresource>
 </RCC>

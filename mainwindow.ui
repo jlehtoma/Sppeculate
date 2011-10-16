@@ -18,7 +18,7 @@
     <normaloff>:/share/icons/app-icon.svg</normaloff>:/share/icons/app-icon.svg</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
@@ -31,12 +31,65 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>809</width>
-           <height>288</height>
+           <width>803</width>
+           <height>224</height>
           </rect>
          </property>
+         <zorder>horizontalSlider</zorder>
         </widget>
        </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Zoom</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSlider" name="horizontalSlider">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimum">
+         <number>50</number>
+        </property>
+        <property name="maximum">
+         <number>150</number>
+        </property>
+        <property name="sliderPosition">
+         <number>100</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="tickPosition">
+         <enum>QSlider::TicksAbove</enum>
+        </property>
+        <property name="tickInterval">
+         <number>0</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
       </item>
      </layout>
     </item>
@@ -74,7 +127,7 @@ color: rgb(255, 255, 255);</string>
      <x>0</x>
      <y>0</y>
      <width>825</width>
-     <height>20</height>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -91,7 +144,14 @@ color: rgb(255, 255, 255);</string>
     </property>
     <addaction name="actionAbout"/>
    </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionSettings"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
@@ -102,6 +162,7 @@ color: rgb(255, 255, 255);</string>
     <bool>false</bool>
    </attribute>
    <addaction name="actionOpenFolder"/>
+   <addaction name="actionSettings"/>
    <addaction name="separator"/>
    <addaction name="actionZoomOut"/>
    <addaction name="actionZoomDefault"/>
@@ -228,6 +289,18 @@ color: rgb(255, 255, 255);</string>
    </property>
    <property name="toolTip">
     <string>Zoom in</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="icon">
+    <iconset resource="sppeculate.qrc">
+     <normaloff>:/share/icons/settings.svg</normaloff>:/share/icons/settings.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Settings</string>
+   </property>
+   <property name="toolTip">
+    <string>Application settings</string>
    </property>
   </action>
  </widget>
