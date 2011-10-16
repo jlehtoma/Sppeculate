@@ -22,18 +22,21 @@ private:
     QLabel *imageLabel;
     int currentIndex;
     double scaleFactor;
-    TrainingSet trainingItems;
+    TrainingSet *trainingItems;
 
     void closeEvent(QCloseEvent *event);
     void readSettings();
     void writeSettings();
     void scaleImage(double factor);
+    void scaleFixedImage(int factor);
     void adjustScrollBar(QScrollBar *scrollBar, double factor);
 
 private slots:
     void openFolder();
     void showAbout();
     void showImage(int index);
+
+    void toggleFullScreen(bool toggle);
 
     void nextItem();
     void prevItem();
@@ -43,6 +46,7 @@ private slots:
     void normalSize();
     void zoomIn();
     void zoomOut();
+    void zoom(int scaling);
 };
 
 #endif // MAINWINDOW_H

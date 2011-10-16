@@ -7,8 +7,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    imageLabel = new QLabel;    imageLabel->setBackgroundRole(QPalette::Base);
-    imageLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    imageLabel = new QLabel;
+    imageLabel->setBackgroundRole(QPalette::Dark);
+    imageLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     imageLabel->setScaledContents(true);
 
     connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(showAbout()));
@@ -18,9 +19,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionZoomIn, SIGNAL(triggered()), this, SLOT(zoomIn()));
     connect(ui->actionZoomOut, SIGNAL(triggered()), this, SLOT(zoomOut()));
     connect(ui->actionZoomDefault, SIGNAL(triggered()), this, SLOT(normalSize()));
+    connect(ui->zoomSlider, SIGNAL(valueChanged(int)), this, SLOT(zoom(int)));
+
+    connect(ui->actionFullscreen, SIGNAL(triggered(bool)), this, SLOT(toggleFullScreen(bool)));
+
+    connect(ui->actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 
     ui->scrollArea->setWidget(imageLabel);
-    TrainingSet trainingItems;
+    trainingItems = new TrainingSet;
 
     // TODO: traingItems MUST be initialized in the constructor!
     scaleFactor = 1.0;
@@ -35,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete trainingItems;
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -62,7 +69,7 @@ void MainWindow::readSettings()
         restoreState(settings.value("MainWindow/windowState").toByteArray());
         QString recentPath(settings.value("MainWindow/recentPath").toString());
         if (!recentPath.isEmpty()){
-            trainingItems.readData(recentPath);
+            trainingItems->readData(recentPath);
             qDebug() << "Found path to previous location: " << recentPath;
             currentIndex = 0;
             showImage(currentIndex);
@@ -78,7 +85,7 @@ void MainWindow::writeSettings()
         QSettings settings("Zonation");
         settings.setValue("MainWindow/geometry", saveGeometry());
         settings.setValue("MainWindow/windowState", saveState());
-        QString recentPath(trainingItems.getRootPath());
+        QString recentPath(trainingItems->getRootPath());
         if (!recentPath.isEmpty()) {
             settings.setValue("MainWindow/recentPath", recentPath);
             qDebug() << "Wrote location " << recentPath;
@@ -88,7 +95,7 @@ void MainWindow::writeSettings()
 void MainWindow::nextItem()
 {
     qDebug("Next item");
-    if ((currentIndex + 1) <= trainingItems.count()) {
+    if ((currentIndex + 1) <= trainingItems->count()) {
         ++currentIndex;
         qDebug("CurrentIndex changed to: %d", currentIndex);
         showImage(currentIndex);
@@ -112,7 +119,7 @@ void MainWindow::openFolder()
                                                     "/home",
                                                     QFileDialog::ShowDirsOnly
                                                     | QFileDialog::DontResolveSymlinks);
-    trainingItems.readData(dir);
+    trainingItems->readData(dir);
     currentIndex = 0;
     showImage(currentIndex);
     updateUI();
@@ -126,9 +133,9 @@ void MainWindow::showAbout()
 
 void MainWindow::showImage(int index)
 {
-    if (trainingItems.count() >= index) {
+    if (trainingItems->count() >= index) {
 
-        QString filePath = trainingItems.getFilePath(index);
+        QString filePath = trainingItems->getFilePath(index);
         if (!filePath.isEmpty()) {
                 QImage image(filePath);
                 if (image.isNull()) {
@@ -137,9 +144,10 @@ void MainWindow::showImage(int index)
                     return;
                 }
         imageLabel->setPixmap(QPixmap::fromImage(image));
+        imageLabel->adjustSize();
         scaleFactor = 1.0;
 
-        ui->infoEdit->setText("<H2>" + trainingItems.getFileName(index) + "</H2>");
+        ui->infoEdit->setText("<H2>" + trainingItems->getFileName(index) + "</H2>");
 
         }
     }
@@ -147,7 +155,7 @@ void MainWindow::showImage(int index)
 
 void MainWindow::updateUI()
 {
-    if (trainingItems.count() > 0) {
+    if (trainingItems->count() > 0) {
         ui->actionZoomIn->setEnabled(true);
         ui->actionZoomOut->setEnabled(true);
         ui->actionZoomDefault->setEnabled(true);
@@ -156,7 +164,7 @@ void MainWindow::updateUI()
             ui->actionNextItem->setEnabled(true);
         }
         else {
-            if (currentIndex == trainingItems.count()) {
+            if (currentIndex == trainingItems->count()) {
                 ui->actionPrevItem->setEnabled(true);
                 ui->actionNextItem->setEnabled(false);
             }
@@ -165,15 +173,16 @@ void MainWindow::updateUI()
                 ui->actionNextItem->setEnabled(true);
             }
         }
-        ui->statusBar->showMessage("Zoom: " + QString::number(scaleFactor * 100.0) + "%");
+        ui->zoomLabel->setText(QString::number(scaleFactor * 100.0));
+        ui->zoomSlider->setValue(int(scaleFactor * 100.0));
     }
     else {
         ui->actionZoomIn->setEnabled(false);
         ui->actionZoomOut->setEnabled(false);
         ui->actionZoomDefault->setEnabled(false);
     }
-
-
+    ui->actionZoomIn->setEnabled(scaleFactor < 3.0);
+    ui->actionZoomOut->setEnabled(scaleFactor > 0.333);
 }
 
 void MainWindow::normalSize()
@@ -181,6 +190,7 @@ void MainWindow::normalSize()
     qDebug("Zooming to default size");
     imageLabel->adjustSize();
     scaleFactor = 1.0;
+    updateUI();
 }
 
 void MainWindow::zoomIn()
@@ -193,22 +203,50 @@ void MainWindow::zoomOut()
     scaleImage(0.8);
 }
 
+void MainWindow::zoom(int scaling)
+{
+    scaleFixedImage(scaling);
+}
+
 void MainWindow::scaleImage(double factor)
 {
     Q_ASSERT(imageLabel->pixmap());
     scaleFactor *= factor;
     qDebug("Zooming with factor %f", scaleFactor);
+    //imageLabel->resize(scaleFactor * imageLabel->pixmap()->size());
+    qDebug() << scaleFactor * imageLabel->pixmap()->size();
     imageLabel->resize(scaleFactor * imageLabel->pixmap()->size());
 
     adjustScrollBar(ui->scrollArea->horizontalScrollBar(), factor);
     adjustScrollBar(ui->scrollArea->verticalScrollBar(), factor);
+    updateUI();
+}
 
-    ui->actionZoomIn->setEnabled(scaleFactor < 3.0);
-    ui->actionZoomOut->setEnabled(scaleFactor > 0.333);
+void MainWindow::scaleFixedImage(int factor)
+{
+    Q_ASSERT(imageLabel->pixmap());
+    scaleFactor = factor / 100.0;
+    qDebug("Zooming with factor %f", scaleFactor);
+    //imageLabel->resize(scaleFactor * imageLabel->pixmap()->size());
+    qDebug() << scaleFactor * imageLabel->pixmap()->size();
+    imageLabel->resize(scaleFactor * imageLabel->pixmap()->size());
+
+    adjustScrollBar(ui->scrollArea->horizontalScrollBar(), factor);
+    adjustScrollBar(ui->scrollArea->verticalScrollBar(), factor);
+    updateUI();
 }
 
 void MainWindow::adjustScrollBar(QScrollBar *scrollBar, double factor)
 {
     scrollBar->setValue(int(factor * scrollBar->value()
                             + ((factor - 1) * scrollBar->pageStep()/2)));
+}
+
+void MainWindow::toggleFullScreen(bool toggle)
+{
+    if (toggle){
+        this->showFullScreen();
+    } else {
+        this->showNormal();
+    }
 }
