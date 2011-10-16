@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "trainingset.h"
+#include "configdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -20,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionZoomOut, SIGNAL(triggered()), this, SLOT(zoomOut()));
     connect(ui->actionZoomDefault, SIGNAL(triggered()), this, SLOT(normalSize()));
     connect(ui->zoomSlider, SIGNAL(valueChanged(int)), this, SLOT(zoom(int)));
+    connect(ui->actionSettings, SIGNAL(triggered()), this, SLOT(showConfig()));
 
     connect(ui->actionFullscreen, SIGNAL(triggered(bool)), this, SLOT(toggleFullScreen(bool)));
 
@@ -64,7 +66,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::readSettings()
 {
         qDebug() << "Reading settings";
-        QSettings settings("Zonation");
+        QSettings settings("Sppeculate");
         restoreGeometry(settings.value("MainWindow/geometry").toByteArray());
         restoreState(settings.value("MainWindow/windowState").toByteArray());
         QString recentPath(settings.value("MainWindow/recentPath").toString());
@@ -82,7 +84,7 @@ void MainWindow::readSettings()
 void MainWindow::writeSettings()
 {
         qDebug() << "Writing settings";
-        QSettings settings("Zonation");
+        QSettings settings("Sppeculate");
         settings.setValue("MainWindow/geometry", saveGeometry());
         settings.setValue("MainWindow/windowState", saveState());
         QString recentPath(trainingItems->getRootPath());
@@ -131,6 +133,14 @@ void MainWindow::showAbout()
     QMessageBox::about(this, "About", aboutText);
 }
 
+void MainWindow::showConfig()
+{
+    configDialog *dlg = new configDialog(this);
+    if (dlg->exec()) {
+        int i = 1;
+    }
+}
+
 void MainWindow::showImage(int index)
 {
     if (trainingItems->count() >= index) {
@@ -173,7 +183,7 @@ void MainWindow::updateUI()
                 ui->actionNextItem->setEnabled(true);
             }
         }
-        ui->zoomLabel->setText(QString::number(scaleFactor * 100.0));
+        ui->zoomLabel->setText(QString::number(scaleFactor * 100.0) + "%");
         ui->zoomSlider->setValue(int(scaleFactor * 100.0));
     }
     else {

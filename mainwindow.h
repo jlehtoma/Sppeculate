@@ -34,6 +34,7 @@ private:
 private slots:
     void openFolder();
     void showAbout();
+    void showConfig();
     void showImage(int index);
 
     void toggleFullScreen(bool toggle);
