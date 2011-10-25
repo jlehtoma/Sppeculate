@@ -13,14 +13,17 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     trainingset.cpp \
-    configdialog.cpp
+    configdialog.cpp \
+    dataform.cpp
 
 HEADERS  += mainwindow.h \
     trainingset.h \
-    configdialog.h
+    configdialog.h \
+    dataform.h
 
 FORMS    += mainwindow.ui \
-    configdialog.ui
+    configdialog.ui \
+    dataform.ui
 
 RESOURCES += \
     sppeculate.qrc
@@ -30,6 +33,11 @@ VERSION = 0.0.1
 
 # Define the preprocessor macro to get the application version in our application.
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
+
+
+
+
+
 
 
 

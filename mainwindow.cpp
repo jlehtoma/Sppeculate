@@ -23,9 +23,22 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->zoomSlider, SIGNAL(valueChanged(int)), this, SLOT(zoom(int)));
     connect(ui->actionSettings, SIGNAL(triggered()), this, SLOT(showConfig()));
 
-    connect(ui->actionFullscreen, SIGNAL(triggered(bool)), this, SLOT(toggleFullScreen(bool)));
+    connect(ui->actionFullscreen, SIGNAL(triggered(bool)),
+            this, SLOT(toggleFullScreen(bool)));
 
     connect(ui->actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+
+    // Initiate the DataForm
+    dataForm = new DataForm;
+    ui->formDockWidget->setWidget(dataForm);
+
+    // Set the show/hide action for the formDockWidget
+    QAction *formAction = ui->formDockWidget->toggleViewAction();
+    formAction->setIcon(QIcon(":/share/icons/editor.svg"));
+    formAction->setShortcut(QKeySequence(tr("F6")));
+    formAction->setToolTip("Toggle answer form");
+    ui->menuView->insertAction(ui->actionFullscreen, formAction);
+    ui->mainToolBar->insertAction(ui->actionSettings, formAction);
 
     ui->scrollArea->setWidget(imageLabel);
     trainingItems = new TrainingSet;
@@ -156,8 +169,6 @@ void MainWindow::showImage(int index)
         imageLabel->setPixmap(QPixmap::fromImage(image));
         imageLabel->adjustSize();
         scaleFactor = 1.0;
-
-        ui->infoEdit->setText("<H2>" + trainingItems->getFileName(index) + "</H2>");
 
         }
     }

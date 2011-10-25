@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>825</width>
-    <height>479</height>
+    <width>886</width>
+    <height>526</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,8 +38,8 @@
         <widget class="QWidget" name="scrollAreaWidgetContents">
          <property name="geometry">
           <rect>
-           <x>0</x>
-           <y>0</y>
+           <x>3</x>
+           <y>92</y>
            <width>803</width>
            <height>227</height>
           </rect>
@@ -108,41 +108,17 @@
       </item>
      </layout>
     </item>
-    <item>
-     <widget class="QTextEdit" name="infoEdit">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>100</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgba(89, 89, 89, 220);
-color: rgb(255, 255, 255);</string>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Plain</enum>
-      </property>
-     </widget>
-    </item>
    </layout>
+   <zorder>scrollArea</zorder>
+   <zorder>scrollArea</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>825</width>
-     <height>29</height>
+     <width>886</width>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -197,6 +173,25 @@ color: rgb(255, 255, 255);</string>
    <addaction name="action_Quit"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QDockWidget" name="formDockWidget">
+   <property name="windowIcon">
+    <iconset resource="sppeculate.qrc">
+     <normaloff>:/share/icons/editor.svg</normaloff>:/share/icons/editor.svg</iconset>
+   </property>
+   <property name="floating">
+    <bool>false</bool>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>Form</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents"/>
+  </widget>
   <action name="action_Quit">
    <property name="icon">
     <iconset resource="sppeculate.qrc">

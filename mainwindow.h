@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QtGui>
+#include "dataform.h"
 #include "trainingset.h"
 
 namespace Ui {
@@ -19,6 +20,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    DataForm *dataForm;
     QLabel *imageLabel;
     int currentIndex;
     double scaleFactor;
