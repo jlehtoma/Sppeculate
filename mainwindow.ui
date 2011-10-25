@@ -29,6 +29,9 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(70, 70, 70);</string>
+        </property>
         <property name="widgetResizable">
          <bool>false</bool>
         </property>
@@ -38,7 +41,7 @@
         <widget class="QWidget" name="scrollAreaWidgetContents">
          <property name="geometry">
           <rect>
-           <x>3</x>
+           <x>2</x>
            <y>92</y>
            <width>803</width>
            <height>227</height>
@@ -109,8 +112,6 @@
      </layout>
     </item>
    </layout>
-   <zorder>scrollArea</zorder>
-   <zorder>scrollArea</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -182,7 +183,7 @@
     <bool>false</bool>
    </property>
    <property name="allowedAreas">
-    <set>Qt::RightDockWidgetArea</set>
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle">
     <string>Form</string>

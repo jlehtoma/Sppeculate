@@ -269,5 +269,6 @@ void MainWindow::toggleFullScreen(bool toggle)
         this->showFullScreen();
     } else {
         this->showNormal();
+        this->showMaximized();
     }
 }
