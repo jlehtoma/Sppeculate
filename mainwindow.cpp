@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "trainingset.h"
 #include "configdialog.h"
+#include "models.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -28,27 +29,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 
-    // Initiate the DataForm
-    dataForm = new DataForm;
-    ui->formDockWidget->setWidget(dataForm);
-
-    // Set the show/hide action for the formDockWidget
-    QAction *formAction = ui->formDockWidget->toggleViewAction();
-    formAction->setIcon(QIcon(":/share/icons/editor.svg"));
-    formAction->setShortcut(QKeySequence(tr("F6")));
-    formAction->setToolTip("Toggle answer form");
-    ui->menuView->insertAction(ui->actionFullscreen, formAction);
-    ui->mainToolBar->insertAction(ui->actionSettings, formAction);
-
     ui->scrollArea->setWidget(imageLabel);
     trainingItems = new TrainingSet;
+
+    // Read the initial settings
+    readSettings();
+
+    // Initiate the DataForm
+    readInitialData();
 
     // TODO: traingItems MUST be initialized in the constructor!
     scaleFactor = 1.0;
     //qDebug() << trainingItems->count();
-
-    // Read the initial settings
-    readSettings();
 
     updateUI();
 }
@@ -74,6 +66,38 @@ void MainWindow::closeEvent(QCloseEvent *event)
         } else {
                 event->ignore();
         }
+}
+
+bool MainWindow::readInitialData()
+{
+    // TODO: database should come from project file
+    QString dbName = trainingItems->getRootPath() + "/linnut.sqlite";
+    db = QSqlDatabase::addDatabase("QSQLITE3");
+    qDebug() << "Reading form data from " + dbName;
+    db.setDatabaseName(dbName);
+    bool ok = db.open();
+    if (ok) {
+        formModel = new QSqlRelationalTableModel(this, db);
+        qDebug() << "Using table birds";
+        formModel->setTable("birds");
+        formModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
+        formModel->select();
+
+          qDebug() << "Initiating form";
+        dataForm = new DataForm(this, formModel);
+        ui->formDockWidget->setWidget(dataForm);
+
+        // Set the show/hide action for the formDockWidget
+        QAction *formAction = ui->formDockWidget->toggleViewAction();
+        formAction->setIcon(QIcon(":/share/icons/editor.svg"));
+        formAction->setShortcut(QKeySequence(tr("F6")));
+        formAction->setToolTip("Toggle answer form");
+        ui->menuView->insertAction(ui->actionFullscreen, formAction);
+        ui->mainToolBar->insertAction(ui->actionSettings, formAction);
+    } else {
+        qDebug() << "Data form cannot be initialized";
+    }
+    return ok;
 }
 
 void MainWindow::readSettings()

@@ -3,8 +3,11 @@
 
 #include <QMainWindow>
 #include <QtGui>
+#include <QtSql/QSqlRelationalTableModel>
+#include <QtSql/QSqlDatabase>
 #include "dataform.h"
 #include "trainingset.h"
+#include "models.h"
 
 namespace Ui {
     class MainWindow;
@@ -25,8 +28,11 @@ private:
     int currentIndex;
     double scaleFactor;
     TrainingSet *trainingItems;
+    QSqlRelationalTableModel *formModel;
+    QSqlDatabase db;
 
     void closeEvent(QCloseEvent *event);
+    bool readInitialData();
     void readSettings();
     void writeSettings();
     void scaleImage(double factor);
