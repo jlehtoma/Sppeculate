@@ -72,7 +72,7 @@ bool MainWindow::readInitialData()
 {
     // TODO: database should come from project file
     QString dbName = trainingItems->getRootPath() + "/linnut.sqlite";
-    db = QSqlDatabase::addDatabase("QSQLITE3");
+    db = QSqlDatabase::addDatabase("QSQLITE");
     qDebug() << "Reading form data from " + dbName;
     db.setDatabaseName(dbName);
     bool ok = db.open();
