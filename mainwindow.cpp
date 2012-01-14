@@ -81,6 +81,7 @@ bool MainWindow::readInitialData()
         qDebug() << "Using table birds";
         formModel->setTable("birds");
         formModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
+        formModel->setRelation(0, QSqlRelation("species", "ABBR", "FIN_NAME"));
         formModel->select();
 
           qDebug() << "Initiating form";
