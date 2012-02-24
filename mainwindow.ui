@@ -41,8 +41,8 @@
         <widget class="QWidget" name="scrollAreaWidgetContents">
          <property name="geometry">
           <rect>
-           <x>2</x>
-           <y>92</y>
+           <x>0</x>
+           <y>73</y>
            <width>803</width>
            <height>227</height>
           </rect>
@@ -58,6 +58,23 @@
        <widget class="QLabel" name="label">
         <property name="text">
          <string>Zoom</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="zoomOutButton">
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="sppeculate.qrc">
+          <normaloff>:/share/icons/zoom-out.svg</normaloff>:/share/icons/zoom-out.svg</iconset>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -86,6 +103,20 @@
         </property>
         <property name="tickInterval">
          <number>0</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="zoomInButton">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="sppeculate.qrc">
+          <normaloff>:/share/icons/zoom-in.svg</normaloff>:/share/icons/zoom-in.svg</iconset>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -119,7 +150,7 @@
      <x>0</x>
      <y>0</y>
      <width>886</width>
-     <height>20</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

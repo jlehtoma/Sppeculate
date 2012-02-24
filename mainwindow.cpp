@@ -24,6 +24,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->zoomSlider, SIGNAL(valueChanged(int)), this, SLOT(zoom(int)));
     connect(ui->actionSettings, SIGNAL(triggered()), this, SLOT(showConfig()));
 
+    connect(ui->zoomOutButton, SIGNAL(clicked()), this, SLOT(zoomOut()));
+    connect(ui->zoomInButton, SIGNAL(clicked()), this, SLOT(zoomIn()));
+
+
     connect(ui->actionFullscreen, SIGNAL(triggered(bool)),
             this, SLOT(toggleFullScreen(bool)));
 
@@ -205,6 +209,7 @@ void MainWindow::updateUI()
         ui->actionZoomIn->setEnabled(true);
         ui->actionZoomOut->setEnabled(true);
         ui->actionZoomDefault->setEnabled(true);
+
         if (currentIndex == 0) {
             ui->actionPrevItem->setEnabled(false);
             ui->actionNextItem->setEnabled(true);
@@ -229,6 +234,8 @@ void MainWindow::updateUI()
     }
     ui->actionZoomIn->setEnabled(scaleFactor < 3.0);
     ui->actionZoomOut->setEnabled(scaleFactor > 0.333);
+    ui->zoomInButton->setEnabled(scaleFactor < 3.0);
+    ui->zoomOutButton->setEnabled(scaleFactor > 0.333);
 }
 
 void MainWindow::normalSize()
